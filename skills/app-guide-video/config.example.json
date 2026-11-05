@@ -1,0 +1,18 @@
+{
+  "baseUrl": "https://your-app.example.com",
+  "apiUrl": "https://your-app.example.com/api",
+  "outputDir": "~/guide-videos/your-app",
+  "playwrightCore": "playwright-core",
+  "chromePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "viewport": { "width": 1280, "height": 720 },
+  "locale": "en-US",
+  "captionMs": 2500,
+  "pageSettleMs": 2500,
+  "auth": {
+    "path": "/auth/login",
+    "body": { "username": "${APP_USER}", "password": "${APP_PASSWORD}" },
+    "storage": { "token": "token", "user": "$response" }
+  },
+  "voice": "Majed",
+  "speed": 1.25
+}

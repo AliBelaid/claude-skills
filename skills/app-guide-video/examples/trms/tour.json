@@ -1,0 +1,12 @@
+{
+  "name": "01-tour",
+  "steps": [
+    { "goto": "/app/dashboard" },
+    { "caption": { "en": "Welcome: the home screen shows your work", "ar": "مرحباً: الشاشة الرئيسية تعرض عملك" }, "ms": 2500 },
+    { "screenshot": "dashboard" },
+    { "caption": { "en": "Open a claim batch from the review menu", "ar": "افتح دفعة مطالبات من قائمة المراجعة" } },
+    { "goto": "/app/mail-review/batches" },
+    { "screenshot": "batches" },
+    { "clearCaption": true }
+  ]
+}
