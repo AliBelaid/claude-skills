@@ -4,7 +4,7 @@
   "outputDir": "~/guide-videos/your-app",
   "playwrightCore": "playwright-core",
   "chromePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-  "viewport": { "width": 1280, "height": 720 },
+  "viewport": { "width": 1920, "height": 1080 },
   "locale": "en-US",
   "captionMs": 2500,
   "pageSettleMs": 2500,

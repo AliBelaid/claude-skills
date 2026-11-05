@@ -9,6 +9,17 @@ D = os.environ['DEMO_DIR']
 plan = json.load(open(sys.argv[1], encoding='utf-8'))
 SPEED = plan.get('speed', 1.25)
 clips = plan['clips']
+# Output size: plan "size" ([w, h]) or the resolution of the first screen clip. Every clip (cards included) is
+# fitted into it without distortion, so a mismatched card can never force a downscale of the screen recordings.
+def res(f):
+    o = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height',
+                        '-of', 'csv=p=0', f], capture_output=True, text=True).stdout.strip().split(',')
+    return int(o[0]), int(o[1])
+if 'size' in plan:
+    W, H = plan['size']
+else:
+    W, H = max((res(f"{D}/out/{c['file']}") for c in clips), key=lambda r: r[0] * r[1])
+print(f'output size {W}x{H}')
 AUD = f'{D}/full/audio'; os.makedirs(AUD, exist_ok=True)
 
 def dur(f):
@@ -29,7 +40,7 @@ for i, c in enumerate(clips):
 inputs, vf, af = [], [], []
 for i, c in enumerate(clips):
     inputs += ['-i', f"{D}/out/{c['file']}", '-i', f'{AUD}/{i:02d}.wav']
-    vf.append(f'[{2*i}:v]setpts=PTS/{SPEED},fps=25,scale=1280:720,setsar=1[v{i}]')
+    vf.append(f'[{2*i}:v]setpts=PTS/{SPEED},fps=25,scale={W}:{H}:force_original_aspect_ratio=decrease,pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color=white,setsar=1[v{i}]')
     delay = int((starts[i][0] + 0.3) * 1000)
     af.append(f'[{2*i+1}:a]adelay={delay}|{delay},volume=1.6[a{i}]')
 n = len(clips)

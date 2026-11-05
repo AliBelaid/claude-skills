@@ -1,0 +1,60 @@
+{
+  "name": "07-voucher-issue",
+  "steps": [
+    {
+      "goto": "/app/mail-review/vouchers/${VOUCHER_ID}"
+    },
+    {
+      "caption": {
+        "en": "Step 7 — Review the draft voucher",
+        "ar": "الخطوة 7 — راجع السند المسودة"
+      },
+      "ms": 2800
+    },
+    {
+      "waitFor": {
+        "selector": "button[data-testid=issue]:not([disabled])",
+        "timeout": 20000
+      }
+    },
+    {
+      "wait": 3000
+    },
+    {
+      "click": {
+        "selector": "button[data-testid=issue]"
+      },
+      "wait": 1500
+    },
+    {
+      "caption": {
+        "en": "Confirm the issue in the dialog",
+        "ar": "أكّد الإصدار في النافذة"
+      },
+      "ms": 1800
+    },
+    {
+      "waitFor": {
+        "selector": ".dialog-box button.btn-primary",
+        "timeout": 10000
+      }
+    },
+    {
+      "click": {
+        "selector": ".dialog-box button.btn-primary"
+      },
+      "dismiss": false,
+      "wait": 3000
+    },
+    {
+      "caption": {
+        "en": "The voucher is issued: locked and sent to finance",
+        "ar": "تم إصدار السند: مقفل ومُرسل للمالية"
+      },
+      "ms": 3000
+    },
+    {
+      "clearCaption": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{ "name": "05-audit", "steps": [
+  { "goto": "/app/audit/dashboard" },
+  { "caption": { "en": "Step 5 — Audit: the audit dashboard shows review results", "ar": "الخطوة 5 — التدقيق: لوحة المراجعة تعرض نتائج التدقيق" }, "ms": 2800 },
+  { "goto": "/app/audit-log" },
+  { "caption": { "en": "The audit log records who did what, and when", "ar": "سجل المراجعة يسجل من فعل ماذا ومتى" }, "ms": 2800 },
+  { "goto": "/app/mail-review/batches/${BATCH_ID}" },
+  { "caption": { "en": "The batch: the independent audit is done by another reviewer", "ar": "الدفعة: التدقيق المستقل يقوم به مراجع آخر" }, "ms": 3000 },
+  { "clearCaption": true }
+] }

@@ -1,0 +1,8 @@
+{ "name": "01-navigation", "steps": [
+  { "goto": "/app/dashboard" },
+  { "caption": { "en": "Welcome: the home screen shows your work", "ar": "مرحباً: الشاشة الرئيسية تعرض عملك" }, "ms": 2800 },
+  { "caption": { "en": "The sidebar groups the work by department", "ar": "القائمة الجانبية تجمع الأعمال حسب الإدارة" }, "ms": 2800 },
+  { "click": { "text": "إدارة المراجعة" }, "wait": 900 },
+  { "caption": { "en": "Open the review menu: claims, batches, vouchers", "ar": "افتح قائمة المراجعة: المطالبات والدفعات والسندات" }, "ms": 2800 },
+  { "clearCaption": true }
+] }

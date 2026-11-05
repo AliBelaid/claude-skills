@@ -1,0 +1,12 @@
+{ "name": "06-voucher-create", "steps": [
+  { "goto": "/app/mail-review/vouchers/new" },
+  { "caption": { "en": "Step 6 — New voucher: pick the month range", "ar": "الخطوة 6 — سند جديد: اختر نطاق الأشهر" }, "ms": 2400 },
+  { "fill": { "selector": "input[type=month]", "nth": 0 }, "value": "${MONTH}" },
+  { "fill": { "selector": "input[type=month]", "nth": 1 }, "value": "${MONTH}" },
+  { "wait": 2500 },
+  { "caption": { "en": "Batches of this month that are final-approved appear here", "ar": "تظهر هنا دفعات الشهر المعتمدة نهائياً" }, "ms": 3000 },
+  { "click": { "selector": "button:has-text(\"إنشاء السند\")" }, "wait": 3500 },
+  { "capture": "VOUCHER_ID", "pattern": "vouchers/(\\d+)" },
+  { "caption": { "en": "The voucher is created with the approved claims", "ar": "أُنشئ السند بالمطالبات المعتمدة" }, "ms": 3000 },
+  { "clearCaption": true }
+] }

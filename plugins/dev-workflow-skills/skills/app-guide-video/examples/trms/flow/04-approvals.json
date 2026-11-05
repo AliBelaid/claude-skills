@@ -1,0 +1,20 @@
+{ "name": "04-approvals", "steps": [
+  { "goto": "/app/mail-review/batches/${BATCH_ID}" },
+  { "caption": { "en": "Step 4 — the batch: assign a medical reviewer", "ar": "الخطوة 4 — الدفعة: عيّن مراجعاً طبياً" }, "ms": 2200 },
+  { "click": { "role": "button", "name": "تعيين مراجع", "exact": true }, "wait": 1000 },
+  { "select": { "selector": ".modal-card select.form-select" }, "index": 3, "wait": 600 },
+  { "click": { "selector": ".modal-card button:text-is(\"تعيين مراجع\")" }, "wait": 2500 },
+  { "click": { "role": "button", "name": "بدء المراجعة", "exact": true }, "wait": 2500 },
+  { "caption": { "en": "Review each claim: approve it and close it", "ar": "راجع كل مطالبة: اعتمدها وأقفلها" }, "ms": 2400 },
+  { "click": { "selector": "table a[href*=\"/claims/\"]" }, "wait": 2500 },
+  { "click": { "text": "اعتماد وإقفال نهائي" }, "wait": 2500 },
+  { "goto": "/app/mail-review/batches/${BATCH_ID}" },
+  { "click": { "role": "button", "name": "إكمال المراجعة", "exact": true }, "wait": 2500 },
+  { "caption": { "en": "Complete the review, then send the batch to the manager", "ar": "أكمل المراجعة، ثم رفع الدفعة للمدير" }, "ms": 2600 },
+  { "goto": "/app/review-approval/${BATCH_ID}" },
+  { "click": { "text": "اعتماد المراجعة ورفعها للمدير" }, "wait": 2500 },
+  { "caption": { "en": "Manager final approval — the batch goes to invoices", "ar": "الاعتماد النهائي للمدير — تنتقل الدفعة إلى الفواتير" }, "ms": 2600 },
+  { "click": { "text": "اعتماد نهائي — إلى الفواتير" }, "wait": 3000 },
+  { "screenshot": "approved" },
+  { "clearCaption": true }
+] }

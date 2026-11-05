@@ -1,0 +1,14 @@
+{ "name": "08-user", "steps": [
+  { "goto": "/app/users/new" },
+  { "caption": { "en": "Step 8 — Create a user", "ar": "الخطوة 8 — إنشاء مستخدم" }, "ms": 2200 },
+  { "fill": { "selector": "input[name=firstName]" }, "value": "موظف" },
+  { "fill": { "selector": "input[name=lastName]" }, "value": "تجريبي" },
+  { "fill": { "selector": "input[name=userCode]" }, "value": "${USER_CODE}" },
+  { "fill": { "selector": "input[name=password]" }, "value": "${USER_PASSWORD}" },
+  { "fill": { "selector": "input[name=passwordConfirm]" }, "value": "${USER_PASSWORD}" },
+  { "click": { "selector": ".uf-role:has-text(\"إدخال\") input[type=checkbox]" }, "wait": 600 },
+  { "caption": { "en": "Choose the role: what the user can see and do", "ar": "اختر الصلاحية: ما يراه المستخدم ويفعله" }, "ms": 2600 },
+  { "click": { "selector": "button[type=submit]" }, "wait": 3000 },
+  { "caption": { "en": "Save: the user can sign in with the login code", "ar": "حفظ: يمكن للمستخدم الدخول برمز الدخول" }, "ms": 2800 },
+  { "clearCaption": true }
+] }

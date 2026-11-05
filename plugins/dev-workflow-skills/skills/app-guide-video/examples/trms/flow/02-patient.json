@@ -1,0 +1,16 @@
+{ "name": "02-patient", "steps": [
+  { "goto": "/app/mail-review/patients/new" },
+  { "caption": { "en": "Step 1 — Create a patient file", "ar": "الخطوة 1 — إنشاء ملف مريض" }, "ms": 2000 },
+  { "fill": { "selector": "[data-testid=pc-nid]" }, "value": "${NID}" },
+  { "fill": { "selector": "[data-testid=pc-name-ar]" }, "value": "${PATIENT_AR}" },
+  { "fill": { "selector": "input[name=nameEn]" }, "value": "${PATIENT_EN}" },
+  { "fill": { "selector": "input[name=dob]" }, "value": "1985-04-12" },
+  { "caption": { "en": "The national ID sets the gender; enter the names and date of birth", "ar": "الرقم الوطني يحدد الجنس؛ أدخل الأسماء وتاريخ الميلاد" }, "ms": 2800 },
+  { "click": { "selector": "[data-testid=pc-next]" }, "wait": 1200 },
+  { "click": { "selector": "[data-testid=pc-next]" }, "wait": 1200 },
+  { "click": { "selector": "[data-testid=pc-next]" }, "wait": 1200 },
+  { "caption": { "en": "Review the details, then save", "ar": "راجع البيانات ثم احفظ" }, "ms": 2000 },
+  { "click": { "selector": "[data-testid=pc-save]" }, "wait": 3500 },
+  { "caption": { "en": "The patient file is created", "ar": "تم إنشاء ملف المريض" }, "ms": 2600 },
+  { "clearCaption": true }
+] }

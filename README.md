@@ -4,7 +4,7 @@ Skills for Claude Code (and any agent that reads `SKILL.md`). Packaged as the pl
 
 | Skill | What it does |
 |---|---|
-| `app-guide-video` | Records a web app's screens with Playwright, turns them into small MP4 clips, and combines them into one narrated video (sped up, under a size limit). Works for any app with a login. |
+| `app-guide-video` | Records a web app's screens with Playwright (1920×1080, 100% zoom), turns them into small MP4 clips, and combines them into one narrated video (sped up, under a size limit). `scripts/run_flow.py` runs a whole multi-chapter flow, passes IDs between chapters, and runs hooks. Works for any app with a login. |
 | `ultrathink` | A careful reasoning method for hard questions: assumptions, hypotheses, evidence, then a verified answer. |
 | `github-search` | Searches GitHub (repos, code, issues, PRs, releases) with the `gh` CLI and checks a project's health and licence before use. |
 | `network-troubleshooting` | Layer-by-layer diagnosis of connection problems: DNS, route, port, TLS certificate, HTTP. macOS, Windows and Linux. |

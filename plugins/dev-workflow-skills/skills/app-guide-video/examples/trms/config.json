@@ -4,14 +4,24 @@
   "outputDir": "~/guide-videos/trms",
   "playwrightCore": "playwright-core",
   "chromePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-  "viewport": { "width": 1280, "height": 720 },
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
   "locale": "ar",
   "captionMs": 2500,
   "pageSettleMs": 2500,
   "auth": {
     "path": "/account/login",
-    "body": { "userCode": "${APP_USER}", "password": "${APP_PASSWORD}" },
-    "storage": { "trms_token": "token", "trms_user": "$response", "trms_remember": "1" }
+    "body": {
+      "userCode": "${APP_USER}",
+      "password": "${APP_PASSWORD}"
+    },
+    "storage": {
+      "trms_token": "token",
+      "trms_user": "$response",
+      "trms_remember": "1"
+    }
   },
   "voice": "Majed",
   "speed": 1.25
