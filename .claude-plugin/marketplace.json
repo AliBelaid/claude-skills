@@ -1,0 +1,13 @@
+{
+  "name": "ali-claude-skills",
+  "owner": { "name": "AliBelaid" },
+  "metadata": { "description": "Public skills marketplace for Claude Code" },
+  "plugins": [
+    {
+      "name": "dev-workflow-skills",
+      "source": "./plugins/dev-workflow-skills",
+      "description": "app-guide-video, ultrathink, github-search, network-troubleshooting",
+      "version": "0.1.0"
+    }
+  ]
+}

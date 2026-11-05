@@ -1,6 +1,6 @@
 # Claude skills
 
-Skills for Claude Code (and any agent that reads `SKILL.md`). Each folder is one skill.
+Skills for Claude Code (and any agent that reads `SKILL.md`). Packaged as the plugin `dev-workflow-skills` in the marketplace `ali-claude-skills`.
 
 | Skill | What it does |
 |---|---|
@@ -9,13 +9,22 @@ Skills for Claude Code (and any agent that reads `SKILL.md`). Each folder is one
 | `github-search` | Searches GitHub (repos, code, issues, PRs, releases) with the `gh` CLI and checks a project's health and licence before use. |
 | `network-troubleshooting` | Layer-by-layer diagnosis of connection problems: DNS, route, port, TLS certificate, HTTP. macOS, Windows and Linux. |
 
-## Install
+## Install as a plugin (recommended)
+
+In Claude Code:
+
+```
+/plugin marketplace add AliBelaid/claude-skills
+/plugin install dev-workflow-skills@ali-claude-skills
+```
+
+## Install by copying
 
 Copy the folders you want into your skills directory:
 
 ```bash
 mkdir -p ~/.claude/skills
-cp -R skills/<skill-name> ~/.claude/skills/
+cp -R plugins/dev-workflow-skills/skills/<skill-name> ~/.claude/skills/
 ```
 
 Then start a new Claude Code session. Skills load from `~/.claude/skills/`.
@@ -29,3 +38,7 @@ Then start a new Claude Code session. Skills load from `~/.claude/skills/`.
 - Nothing here stores passwords or tokens. Secrets are read from environment variables.
 - `app-guide-video` creates data when it runs. Use a local or demo copy of the app.
 - `network-troubleshooting` runs read-only checks by default and only on hosts you are allowed to test.
+
+## Licence
+
+MIT. See `LICENSE`.
