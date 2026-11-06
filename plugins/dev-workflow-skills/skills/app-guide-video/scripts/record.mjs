@@ -97,24 +97,35 @@ let privacy = ch.privacy !== undefined ? ch.privacy : (cfg.privacy || null);
 if (privacy && privacy.keep && !privacy.rows) privacy = { ...privacy, rows: DEFAULT_ROWS };
 await ctx.addInitScript((initial) => {
   window.__gm = initial;
+  // DENY BY DEFAULT (2026-11-06): marking rows after they paint let one frame of a freshly opened dropdown or
+  // list through (40-160 ms, real names readable — caught by frame review). Now a stylesheet blurs every row-like
+  // element from its first paint; JS only marks the rows that ARE demo data (data-gm-keep) to un-blur them.
+  const BLUR = 'filter:blur(max(10px,0.45em))!important;opacity:.55!important;';
+  let lastCss = null;
+  const css = (m) => {
+    let out = '[data-gm-blur]{' + BLUR + '}';
+    if (m && m.keep && m.keep.length && m.rows) {
+      const sel = m.rows.split(',').map((x) => x.trim()).filter(Boolean)
+        .map((x) => x + ':not([data-gm-keep]):not(:has(th))').join(',');
+      out += sel + '{' + BLUR + '}';
+    }
+    return out;
+  };
   const apply = () => {
     const m = window.__gm;
-    if (!document.head) return;
-    if (!document.getElementById('gm-style')) {
-      const st = document.createElement('style'); st.id = 'gm-style';
-      st.textContent = '[data-gm-blur]{filter:blur(7px)!important;}';
-      document.head.appendChild(st);
-    }
-    const marked = new Set();
+    const root = document.head || document.documentElement;
+    if (!root) return;
+    let st = document.getElementById('gm-style');
+    if (!st) { st = document.createElement('style'); st.id = 'gm-style'; root.appendChild(st); }
+    const c = css(m);
+    if (c !== lastCss) { st.textContent = c; lastCss = c; }
     if (m && m.keep && m.keep.length && m.rows) {
       for (const el of document.querySelectorAll(m.rows)) {
-        if (el.closest('#guide-cap') || el.querySelector('th')) continue;
-        const t = el.textContent || '';
-        if (!t.trim()) continue;
-        if (!m.keep.some((k) => t.includes(k))) marked.add(el);
+        const keep = m.keep.some((k) => (el.textContent || '').includes(k));
+        if (keep !== el.hasAttribute('data-gm-keep')) el.toggleAttribute('data-gm-keep', keep);
       }
     }
-    if (m && m.redact && m.redact.length) for (const el of document.querySelectorAll(m.redact.join(','))) marked.add(el);
+    const marked = new Set(m && m.redact && m.redact.length ? document.querySelectorAll(m.redact.join(',')) : []);
     for (const el of document.querySelectorAll('[data-gm-blur]')) if (!marked.has(el)) el.removeAttribute('data-gm-blur');
     for (const el of marked) if (!el.hasAttribute('data-gm-blur')) el.setAttribute('data-gm-blur', '');
   };
@@ -215,6 +226,19 @@ for (const raw of ch.steps) {
     const ok = await page.getByText(step.expectText).first().isVisible().catch(() => false);
     log.push(`expectText "${step.expectText}": ${ok ? 'found' : 'NOT FOUND'}`);
     if (!ok && step.required) throw new Error(`required text not found: ${step.expectText}`);
+  } else if (step.evaluate !== undefined) {
+    // {"evaluate": "<js expression>", "label": "...", "until": true, "timeout": 20000, "required": true}
+    // runs the expression in the page and logs its JSON result. `until` waits until it is truthy (a condition,
+    // not a sleep); `required` fails the run when the result is falsy or carries ok:false.
+    const expr = String(step.evaluate);
+    let val;
+    if (step.until) {
+      const h = await page.waitForFunction(expr, null, { timeout: step.timeout || 20000 }).catch(() => null);
+      val = h ? await h.jsonValue().catch(() => true) : await page.evaluate(expr).catch((e) => ({ ok: false, error: e.message }));
+    } else val = await page.evaluate(expr).catch((e) => ({ ok: false, error: e.message }));
+    const bad = !val || (typeof val === 'object' && val.ok === false);
+    log.push(`evaluate ${step.label || expr.slice(0, 60)}: ${JSON.stringify(val)}${bad ? ' (FALSY)' : ''}`);
+    if (bad && step.required) throw new Error(`evaluate failed: ${step.label || expr.slice(0, 80)} -> ${JSON.stringify(val)}`);
   } else if (step.capture !== undefined) {
     // Save the first group of step.pattern found in the current URL, e.g. {"capture":"BATCH_ID","pattern":"batches/(\\d+)"}.
     // Later chapters read it as ${BATCH_ID} in their steps, and the runner passes it on as an environment variable.

@@ -8,6 +8,8 @@ import json, os, subprocess, sys
 D = os.environ['DEMO_DIR']
 plan = json.load(open(sys.argv[1], encoding='utf-8'))
 SPEED = plan.get('speed', 1.25)
+# Playwright's video capture can leave a grey strip along the bottom edge; plan "crop_bottom": px removes it.
+CROP_BOTTOM = int(plan.get('crop_bottom', 0))
 clips = plan['clips']
 # Output size: plan "size" ([w, h]) or the resolution of the first screen clip. Every clip (cards included) is
 # fitted into it without distortion, so a mismatched card can never force a downscale of the screen recordings.
@@ -40,7 +42,8 @@ for i, c in enumerate(clips):
 inputs, vf, af = [], [], []
 for i, c in enumerate(clips):
     inputs += ['-i', f"{D}/out/{c['file']}", '-i', f'{AUD}/{i:02d}.wav']
-    vf.append(f'[{2*i}:v]setpts=PTS/{SPEED},fps=25,scale={W}:{H}:force_original_aspect_ratio=decrease,pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color=white,setsar=1[v{i}]')
+    crop = f"crop=iw:ih-{CROP_BOTTOM}:0:0," if CROP_BOTTOM else ''
+    vf.append(f'[{2*i}:v]{crop}setpts=PTS/{SPEED},fps=25,scale={W}:{H}:force_original_aspect_ratio=decrease,pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color=white,setsar=1[v{i}]')
     delay = int((starts[i][0] + 0.3) * 1000)
     af.append(f'[{2*i+1}:a]adelay={delay}|{delay},volume=1.6[a{i}]')
 n = len(clips)

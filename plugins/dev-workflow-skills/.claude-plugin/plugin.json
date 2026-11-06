@@ -1,6 +1,6 @@
 {
   "name": "dev-workflow-skills",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Practical skills for Claude Code: record app walkthrough videos, deep reasoning on hard problems, GitHub search with health checks, and layer-by-layer network troubleshooting.",
   "author": { "name": "AliBelaid" },
   "license": "MIT",

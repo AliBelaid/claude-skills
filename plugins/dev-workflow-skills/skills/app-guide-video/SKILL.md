@@ -48,6 +48,9 @@ Works for any web app that has a login. The app-specific parts live in two JSON 
    - `type` (target + `value`): keystroke typing, for autocompletes that filter on input events
    - `option` (text): pick an option from an open `mat-select` / `mat-autocomplete` / `[role=option]` list
    - `key` (e.g. `Enter`, `Tab`) and `upload` (file path, optional `selector`)
+   - `evaluate` (a JS expression run in the page; its JSON result is logged): `until: true` waits until it is
+     truthy, `required: true` fails the run on a falsy result or `ok:false` — for DOM checks such as a video's
+     `readyState` or an image's `naturalWidth`
    - Any `click`/`type` step can carry `"dismiss": false` to skip the Escape the recorder sends before
      clicking (needed for a button inside an open MatDialog, which Escape would close), and `"force": true`
      when a floating `mat-label` intercepts the click on an input
@@ -105,6 +108,8 @@ Works for any web app that has a login. The app-specific parts live in two JSON 
   - a `{"privacy": {...}}` step changes it mid-chapter (e.g. drop `mat-option` from `rows` while picking a
     harmless enum like gender, or add a `redact` before a "password reset" dialog).
 - Create demo records with one unique token in every name (suffix) and put that token in `keep`.
+- Blur strength scales with text size (≥10px, `0.45em`) and fades the content: a fixed 7px blur left large KPI
+  digits guessable. Big number panels (dashboards, list KPI bands) still belong in `redact` explicitly.
 - The mask is a guard, not proof: an independent reviewer still inspects frames (every ~2 s) for any readable
   name/number that is not demo data, and passwords. Aggregates (totals, counts, KPI cards) are real data too.
 

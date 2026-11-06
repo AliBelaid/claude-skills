@@ -7,7 +7,7 @@
       "name": "dev-workflow-skills",
       "source": "./plugins/dev-workflow-skills",
       "description": "app-guide-video, ultrathink, github-search, network-troubleshooting",
-      "version": "0.2.0"
+      "version": "0.2.1"
     }
   ]
 }
